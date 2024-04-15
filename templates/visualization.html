@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualization</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Your App Name</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/visualization">Visualization <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2>Visualization</h2>
+        <form method="POST" action="/visualization">
+            <div class="form-group">
+                <label for="type">Select Visualization Type:</label>
+                <select class="form-control" id="type" name="type">
+                    <option value="Select">Select Chart</option>
+                    <option value="pie">Pie Chart</option>
+                    <option value="scatter">Scatter Plot</option>
+                    <option value="bar">Bar Chart</option>
+                    <option value="histogram">Histogram</option>
+                </select>
+            </div>
+            <!-- Additional form fields for specific visualization types -->
+            <!-- For Pie Chart -->
+            <div id="pie_fields" style="display:none;">
+                <div class="form-group">
+                    <label for="category_column">Select Category Column:</label>
+                    <select class="form-control" id="category_column" name="category_column">
+                        {% for column in columns %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="value_column">Select Value Column:</label>
+                    <select class="form-control" id="value_column" name="value_column">
+                        {% for column in columns %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <!-- For Scatter Plot -->
+            <div id="scatter_fields" style="display:none;">
+                <div class="form-group">
+                    <label for="x_column">Select X-Axis Column:</label>
+                    <select class="form-control" id="x_column" name="x_column">
+                        {% for column in columns %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="y_column">Select Y-Axis Column:</label>
+                    <select class="form-control" id="y_column" name="y_column">
+                        {% for column in columns %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <!-- For Bar Chart -->
+            <div id="bar_fields" style="display:none;">
+                <div class="form-group">
+                    <label for="categorical_column">Select Categorical Column:</label>
+                    <select class="form-control" id="categorical_column" name="categorical_column">
+                        {% for column in columns %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <!-- For Histogram -->
+            <div id="histogram_fields" style="display:none;">
+                <div class="form-group">
+                    <label for="numerical_column">Select Numerical Column:</label>
+                    <select class="form-control" id="numerical_column" name="numerical_column">
+                        {% for column in columns %}
+                            <option value="{{ column }}">{{ column }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Visualize</button>
+        </form>
+        <!-- Visualization will be displayed here -->
+        <div id="visualization">
+            {% if chart %}
+                <div id="chart">{{ chart | safe }}</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Show relevant form fields based on selected visualization type
+        $(document).ready(function() {
+            $('#type').change(function() {
+                var type = $(this).val();
+                if (type === 'pie') {
+                    $('#pie_fields').show();
+                    $('#scatter_fields').hide();
+                    $('#bar_fields').hide();
+                    $('#histogram_fields').hide();
+                } else if (type === 'scatter') {
+                    $('#scatter_fields').show();
+                    $('#pie_fields').hide();
+                    $('#bar_fields').hide();
+                    $('#histogram_fields').hide();
+                } else if (type === 'bar') {
+                    $('#bar_fields').show();
+                    $('#pie_fields').hide();
+                    $('#scatter_fields').hide();
+                    $('#histogram_fields').hide();
+                } else if (type === 'histogram') {
+                    $('#histogram_fields').show();
+                    $('#pie_fields').hide();
+                    $('#scatter_fields').hide();
+                    $('#bar_fields').hide();
+                } else {
+                    $('#pie_fields').hide();
+                    $('#scatter_fields').hide();
+                    $('#bar_fields').hide();
+                    $('#histogram_fields').hide();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
