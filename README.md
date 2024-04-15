@@ -10,3 +10,9 @@ In this project the user is allowed to viusalize and anaylize data according to 
 7] Then for Data Visualization option add "/visualization" in the port to see visualization options 
 8] By selecting option we can have the viusalization charts
 9] Anaylsis part is under development although we can see that by "/data" adding in port.
+
+#Templates 
+is used for saving Html files
+
+#csv_file
+its a directory where the uploaded csv files will we uploaded directly and all other tab fetch the data from here.
