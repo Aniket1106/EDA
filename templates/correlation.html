@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correlation Calculation</title>
+</head>
+<body>
+    <h1>Correlation Calculation</h1>
+    <form action="/correlation" method="post">
+        <label for="column_x">Select column for X-axis:</label>
+        <select name="column_x" id="column_x">
+            {% for column in columns %}
+            <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <label for="column_y">Select column for Y-axis:</label>
+        <select name="column_y" id="column_y">
+            {% for column in columns %}
+            <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select><br><br>
+
+        <input type="submit" value="Calculate Correlation">
+    </form>
+
+    {% if error %}
+    <p>{{ error }}</p>
+    {% endif %}
+
+    {% if pearson_corr is defined and spearman_corr is defined and kendall_corr is defined %}
+    <h2>Correlation Results</h2>
+    <p>Pearson Correlation: {{ pearson_corr }}</p>
+    <p>Spearman Rank Correlation: {{ spearman_corr }}</p>
+    <p>Kendall Tau Correlation: {{ kendall_corr }}</p>
+    <p>Columns: {{ column_x }} and {{ column_y }}</p>
+    {% endif %}
+</body>
+</html>
