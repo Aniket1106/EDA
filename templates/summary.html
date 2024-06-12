@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summary Data</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px; /* Default font size */
+        }
+
+        /* Adjust font size for smaller screens */
+        @media (max-width: 768px) {
+            body {
+                font-size: 12px;
+            }
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2; /* Light gray background for table headers */
+        }
+        <style>
+        .navbar {
+            background-color: black;
+        }
+
+        .navbar-nav .nav-link {
+            color: grey !important;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #dee2e6;
+        }
+
+        .table th, .table td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f8f9fa;
+            color: #212529;
+            font-weight: bold;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(0, 0, 0, 0.075);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='EY.png') }}" alt="EY Logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/visualization">Visualization</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/data">Data</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Options
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/metrics">MAE/MSE</a>
+                        <a class="dropdown-item" href="/heatmap">Heatmap</a>
+                        <a class="dropdown-item" href="/summary">Summarize</a>
+                        <a class="dropdown-item" href="/correlation">Correlation</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    
+<body>
+    <div class="container">
+        <h1>Summary Statistics</h1>
+        <table class="table table-striped">
+            <thead class="thead-light">
+                <tr>
+                    <th>Column</th>
+                    <th>Mean</th>
+                    <th>Median</th>
+                    <th>Min</th>
+                    <th>Max</th>
+                    <th>Standard Deviation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for col, stats in summary.items() %}
+                <tr>
+                    <td>{{ col }}</td>
+                    <td>{{ stats.mean }}</td>
+                    <td>{{ stats.median }}</td>
+                    <td>{{ stats.min }}</td>
+                    <td>{{ stats.max }}</td>
+                    <td>{{ stats.std_dev }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

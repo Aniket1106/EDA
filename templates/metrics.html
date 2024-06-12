@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metrics</title>
+    <style>
+        .navbar {
+            background-color: black;
+        }
+
+        .navbar-nav .nav-link {
+            color: grey !important;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #dee2e6;
+        }
+
+        .table th, .table td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #f8f9fa;
+            color: #212529;
+            font-weight: bold;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: rgba(0, 0, 0, 0.075);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='EY.png') }}" alt="EY Logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                
+                <li class="nav-item">
+                    <a class="nav-link" href="/visualization">Visualization</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/data">Data</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Options
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/metrics">MAE/MSE</a>
+                        <a class="dropdown-item" href="/heatmap">Heatmap</a>
+                        <a class="dropdown-item" href="/summary">Summarize</a>
+                        <a class="dropdown-item" href="/correlation">Correlation</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+</head>
+<body>
+    <h1>Metrics</h1>
+    
+    {% if error %}
+    <p>{{ error }}</p>
+    {% endif %}
+
+    <form action="{{ url_for('metrics') }}" method="POST">
+        <label for="y_true">y_true:</label>
+        <select name="y_true" id="y_true">
+            {% for column in columns %}
+            <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select>
+        
+        <label for="y_pred">y_pred:</label>
+        <select name="y_pred" id="y_pred">
+            {% for column in columns %}
+            <option value="{{ column }}">{{ column }}</option>
+            {% endfor %}
+        </select>
+        
+        <button type="submit">Calculate Metrics</button>
+    </form>
+
+    {% if mae_train is defined %}
+    <h2>Metrics:</h2>
+    <p>MAE (Train): {{ mae_train }}</p>
+    <p>MSE (Train): {{ mse_train }}</p>
+    <p>MAE (Test): {{ mae_test }}</p>
+    <p>MSE (Test): {{ mse_test }}</p>
+    {% endif %}
+</body>
+</html>

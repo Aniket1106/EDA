@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='upload.css') }}">
+    <style>
+        .navbar {
+            background-color: black;
+            margin-bottom: 20px; /* Add margin to push the content below */
+        }
+
+        .navbar-nav .nav-link {
+            color: grey !important;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh; /* Adjusted to reduce height */
+            padding-top: 10px; /* Reduced padding at the top */
+            padding-bottom: 10px; /* Reduced padding at the bottom */
+        }
+
+        .form-container {
+            max-width: 400px; /* Reduced max-width */
+            width: 100%;
+            padding: 10px; /* Reduced padding */
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        button[type="submit"] {
+            width: 100%;
+            padding: 8px; /* Reduced padding */
+            margin-bottom: 15px; /* Reduced margin */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+            margin-top: -10px; /* Adjusted margin */
+            margin-bottom: 15px; /* Adjusted margin */
+        }
+
+        p {
+            text-align: center;
+        }
+
+        p a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+
+        /* Additional styles to control table width */
+        .table-container {
+            margin-top: 15px; /* Adds space between the form and table */
+        }
+
+        table {
+            width: 100%; /* Ensure the table takes the full width of the container */
+            table-layout: auto; /* Automatic table layout */
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 5px; /* Reduced padding for table cells */
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            white-space: nowrap; /* Prevent text wrapping */
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='EY.png') }}" alt="EY Logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/signup">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="form-container">
+            <h2>Signup</h2>
+            <form action="{{ url_for('signup') }}" method="POST">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit">Signup</button>
+                </div>
+                {% if error %}
+                    <div class="error">{{ error }}</div>
+                {% endif %}
+            </form>
+            <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+
+            
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

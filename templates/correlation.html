@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correlation Calculation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px; /* Default font size */
+        }
+
+        /* Adjust font size for smaller screens */
+        @media (max-width: 768px) {
+            body {
+                font-size: 12px;
+            }
+        }
+
+        .navbar {
+            background-color: #343a40; /* Dark gray background */
+        }
+
+        .navbar-brand img {
+            max-width: 100px; /* Limit the logo size */
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        form label {
+            font-weight: bold;
+        }
+
+        form select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='EY.png') }}" alt="EY Logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+               
+                <li class="nav-item">
+                    <a class="nav-link" href="/visualization">Visualization</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/data">Data</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Options
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/metrics">MAE/MSE</a>
+                        <a class="dropdown-item" href="/heatmap">Heatmap</a>
+                        <a class="dropdown-item" href="/summary">Summarize</a>
+                        <a class="dropdown-item" href="/correlation">Correlation</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Correlation Calculation</h1>
+        <form action="/correlation" method="post">
+            <div class="form-group">
+                <label for="column_x">Select column for X-axis:</label>
+                <select name="column_x" id="column_x" class="form-control">
+                    {% for column in columns %}
+                    <option value="{{ column }}">{{ column }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="column_y">Select column for Y-axis:</label>
+                <select name="column_y" id="column_y" class="form-control">
+                    {% for column in columns %}
+                    <option value="{{ column }}">{{ column }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <input type="submit" value="Calculate Correlation" class="btn btn-primary">
+        </form>
+
+        {% if error %}
+        <p>{{ error }}</p>
+        {% endif %}
+
+        {% if pearson_corr is defined and spearman_corr is defined and kendall_corr is defined %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-light">
+                    <tr>
+                        <th>Correlation Type</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pearson Correlation</td>
+                        <td>{{ pearson_corr }}</td>
+                    </tr>
+                    <tr>
+                        <td>Spearman Rank Correlation</td>
+                        <td>{{ spearman_corr }}</td>
+                    </tr>
+                    <tr>
+                        <td>Kendall Tau Correlation</td>
+                        <td>{{ kendall_corr }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
