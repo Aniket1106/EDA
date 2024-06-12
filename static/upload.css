@@ -1,0 +1,52 @@
+.navbar-brand img {
+    max-height: 100%; /* Adjust the image height to fit within the navbar */
+    max-width: 100%; /* Adjust the image width to fit within the navbar */
+    padding: 5px; /* Adjust the padding around the image */
+}
+
+/* Custom CSS for Excel-like styling */
+.table-container {
+    overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd; /* Add borders */
+    padding: 8px;
+}
+
+.table th {
+    background-color: #f2f2f2; /* Light gray background for header cells */
+    font-weight: bold;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Alternate row colors */
+}
+
+.table tbody tr:hover {
+    background-color: #ddd; /* Hover effect */
+}
+
+table-wrapper {
+    width: 100%; /* Adjust this width as needed */
+    overflow-x: auto; /* Enable horizontal scrolling */
+}
+
+/* Your existing table styles */
+.table {
+    width: auto; /* Allow the table to adjust its width */
+    border-collapse: collapse;
+    white-space: nowrap; /* Prevent table cells from wrapping */
+}
+
+.table th, .table td {
+    border: 1px solid #ddd; /* Add borders */
+    padding: 8px;
+}
+
+/* Other table styles */
